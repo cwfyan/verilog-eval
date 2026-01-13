@@ -71,6 +71,25 @@ Valid models are listed at the top of `scripts/sv-generate`. The number of in-co
 
 These parameters can be easily swept with a shell script, to create separate build directories for each evaluation harness configuration target. 
 
+## Logisim-evolution Verilog export pipeline
+
+To convert Logisim `.circ` designs into Verilog before running the existing testing/analysis flow, use the
+exporter in `tools/logisim-export`. Build it once and then run the CLI:
+
+```
+tools/logisim-export/build.sh
+java -jar logisim-export.jar path/to/design.circ path/to/design.v
+```
+
+For batch conversion, use the helper script (this is intended to be the “generate” stage that feeds the
+same “test/analyze” stages you already run for VerilogEval):
+
+```
+scripts/logisim-export-batch path/to/circ_dir path/to/verilog_out_dir
+```
+
+If the jar is missing, `scripts/logisim-export` will build it automatically before executing.
+
 ## Citation
 
 For this VerilogEval v2, please cite the following paper:
