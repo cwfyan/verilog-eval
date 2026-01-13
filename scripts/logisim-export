@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+JAR_PATH="${ROOT_DIR}/logisim-export.jar"
+
+if [[ $# -ne 2 ]]; then
+  echo "Usage: $0 <input.circ> <output.v>" >&2
+  exit 2
+fi
+
+if [[ ! -f "${JAR_PATH}" ]]; then
+  "${ROOT_DIR}/tools/logisim-export/build.sh"
+fi
+
+java -jar "${JAR_PATH}" "$1" "$2"

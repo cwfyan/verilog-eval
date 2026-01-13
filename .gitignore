@@ -7,4 +7,6 @@
 
 build*/
 autom4te.cache/
-
+logisim-export.jar
+third_party/logisim-evolution/
+tools/logisim-export/build/

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+EXPORTER="${ROOT_DIR}/scripts/logisim-export"
+
+if [[ $# -ne 2 ]]; then
+  echo "Usage: $0 <input_dir> <output_dir>" >&2
+  exit 2
+fi
+
+INPUT_DIR="$1"
+OUTPUT_DIR="$2"
+
+mkdir -p "${OUTPUT_DIR}"
+
+while IFS= read -r -d '' circ; do
+  rel="${circ#${INPUT_DIR}/}"
+  base="${rel%.circ}"
+  out="${OUTPUT_DIR}/${base}.v"
+  mkdir -p "$(dirname "${out}")"
+  "${EXPORTER}" "${circ}" "${out}"
+done < <(find "${INPUT_DIR}" -type f -name "*.circ" -print0)
